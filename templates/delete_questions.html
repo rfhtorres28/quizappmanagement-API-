@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+</head>
+<style>
+     nav{
+             background-color: #333; /* Background color of the navigation bar */
+            color: #fff; /* Text color of the navigation links */
+            padding: 10px; /* Padding around the navigation links */
+            height: 60px; 
+           }
+
+        ul {
+            list-style-type: none; /* Remove bullet points from the list */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+           }
+           
+        li {
+            display: inline; /* Display list items horizontally */
+            margin-right: 20px; /* Add spacing between navigation links */
+           }
+       
+        body, html {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                background-color: #ffffff;
+                padding-bottom: 10px;
+             }
+        .menu li{
+            display: inline-block;
+            margin-left: 250px;
+            margin-top: 20px;
+
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+    
+        li.add-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 33%;
+     
+        }
+        li.add-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.update-option {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 2%;
+
+       
+        }
+        li.update-option a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.logout {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 2%;
+
+       
+        }
+        li.logout a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        .logo {
+            position: absolute;
+            height: auto;
+            left: 0;
+            width: 170px;
+            margin-top: -17px;
+        }
+        .main-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 4%;
+            margin-left: 3%;
+            width: 1200px;
+            height: 400px;
+        }
+    
+        .select-course {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 7%;
+            height: 200px;
+            width: 430px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            border-radius: 5%;
+            
+        }
+ 
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            background-color: #f1f1f1; 
+        }
+        td {
+            background-color: #ffffff;
+        }
+        table th:nth-child(1) { 
+          color: #333;
+           font-weight: bold;
+           width: 120px;
+           text-align: center;
+        } 
+        table th:nth-child(2) { 
+          color: #333;
+           font-weight: bold;
+           width: 100px;
+           text-align: center;
+        } 
+       table th:nth-child(3) { 
+          color: #333;
+           font-weight: bold;
+           width: 100px;
+           text-align: center;
+        } 
+        table th:nth-child(4) {
+          color: #333;
+           font-weight: bold;
+           width: 380px;
+           text-align: center;
+        } 
+        table th:nth-child(5) {
+          color: #333;
+           font-weight: bold;
+           width: 100px;
+           text-align: center;
+        } 
+        table td:nth-child(1) { 
+          color: #333;
+           font-weight: normal;
+           width: 120px;
+           text-align: center;
+        } 
+        table td:nth-child(2) { 
+          color: #333;
+           font-weight: normal;
+           width: 100px;
+           text-align: center;
+        } 
+       table td:nth-child(3) { 
+          color: #333;
+           font-weight: normal;
+           width: 100px;
+           text-align: center;
+        } 
+        table td:nth-child(4) {
+          color: #333;
+           font-weight: normal;
+           width: 380px;
+           text-align: center;
+        } 
+        table td:nth-child(5) {
+          color: #333;
+           font-weight: normal;
+           width: 100px;
+           text-align: center;
+        } 
+        button {
+             width: 120px;
+             margin-bottom: 1%;  
+        }
+        button a{
+            color: black;
+        }
+        .table {
+            position: relative;
+            overflow: hidden;
+            width: 70%; /* Adjust the width as needed */
+
+        }
+        .table-scroll {
+        overflow-y: auto; 
+        height: 100%;
+        margin-left: 8%;
+    }
+        .table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f1f1f1;
+}
+li.update-question {
+    font-family: sans-serif;
+    font-size: 17px;
+    margin-right: -30%;
+    margin-left: 54%;
+
+}
+li.update-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+.button-spacing {
+        margin-right: 10px; /* Adjust this value as needed */
+    }
+</style>
+<body>
+    <nav> 
+        <ul class="menu">
+            <img src="static\logo.png" alt="Example Image" class="logo">
+            <li class="update-question"><a href = "{{url_for('update_question')}}">Update Questions</a></li>
+            <li class="add-question"><a href = "{{url_for('add_question')}}">Add Questions</a></li>
+            <li class="update-option"><a href = "{{url_for('update_option')}}">Update Options</a></li>
+            <li class="logout"><a href = "{{url_for('logout')}}">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="main-section">
+            <div class="select-course">
+                <h3 style="text-align: center; font-size: 22px;">Select Course</h3>
+                <form id="courseForm" action="" method="POST">
+          <span> 
+         <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Electronics'; document.getElementById('courseForm').submit();">Electronics</a></button>
+         <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Communications'; document.getElementById('courseForm').submit();">Communications</a></button>
+        </span> <br><br>
+        <span> 
+            <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Math'; document.getElementById('courseForm').submit();">Math</a></button>
+            <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'GEAS'; document.getElementById('courseForm').submit();">GEAS</a></button>
+        </span>
+              <input type="hidden" id="courseInput" name="course">  
+             </form>   
+           </div>   
+    <div class="table">
+        <div class="table-scroll">
+       <table>
+        <thead>   
+           <tr>
+             <th>Subject</th>
+             <th>Select to delete</th>
+             <th>Question ID</th>
+             <th>Content</th>
+             <th>Delete Question</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for question in question_list %}
+        <form method="POST" style="display:inline;" id="questionForm">   
+    <tr>
+        <td>{{course}}</td>
+        <td>
+            <input type="radio" name="question_id" value="{{ question['question_id'] }}">
+        </td>
+        <td>{{ question["question_id"] }}</td>
+        <td>{{ question["question"] }}</td>
+        <td>
+            <button type="submit" style="width: 80px;">Delete</button>
+        </td>
+    </tr>
+      </form>
+    {% endfor %} 
+        </tbody>
+     </table>
+    </div>
+    </div>
+   
+</div>
+    
+</body>
+</html>

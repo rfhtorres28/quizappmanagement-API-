@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Page</title>
+    <style>
+       nav{
+             background-color: #333; /* Background color of the navigation bar */
+            color: #fff; /* Text color of the navigation links */
+            padding: 10px; /* Padding around the navigation links */
+            height: 60px; 
+           }
+
+        ul {
+            list-style-type: none; /* Remove bullet points from the list */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+           }
+           
+        li {
+            display: inline; /* Display list items horizontally */
+            margin-right: 20px; /* Add spacing between navigation links */
+           }
+       
+        body, html {
+                margin: 0;
+                background-color: #ffffff;
+                padding-bottom: 10px;
+             }
+        .menu li{
+            display: inline-block;
+            margin-left: 50px;
+            margin-top: 20px;
+
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        li.delete-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            position: relative;
+            top: -3px;
+            margin-left: 54%;
+       
+        }
+        li.delete-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.update-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            position: relative;
+            top: -3px;
+            margin-left: 1%;
+       
+        }
+        li.update-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.update-option {
+            font-family: sans-serif;
+            font-size: 17px;
+            position: relative;
+            top: -3px;
+            margin-left: 1%;
+       
+        }
+        li.update-option a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.logout {
+            font-family: sans-serif;
+            font-size: 17px;
+            position: relative;
+            top: -3px;
+            margin-left: 1%;
+       
+        }
+        li.logout a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        .logo {
+            position: absolute;
+            height: auto;
+            left: 0;
+            width: 170px;
+            margin-top: -17px;
+        }
+        .main-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  
+            width: 600px;
+            height: 440px;
+            margin-left: 25%;
+            margin-top: 2%;
+            border-radius: 5%;
+        }
+        .main-section h1 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+        .main-section img {
+            width: 220px;
+            height: 130px;
+        }
+        .form-section {
+            width: 580px;
+            height: 480px;   
+            margin-top: -20px;   
+        } 
+        .form-group{
+            margin: 0 auto; 
+            margin-left:15px;
+            margin-top: 20px;    
+        }
+        input.form-control-1 {
+            width: 450px; /* Adjust the height as needed */
+            margin-left: 35px;
+        }
+        input.form-control-2 {
+            width: 450px; /* Adjust the height as needed */
+            margin-left: 10px;
+        }
+        .option-form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 580px;
+            height: 200px;  
+            margin-top: -10px;
+        
+          
+        }
+        .options {
+            width: 350px;
+            height: 180px;
+            margin: 0 auto;
+        }
+        .options .option {
+            margin-top: 20px;
+            margin-left: 15px;
+        }
+        .is-correct {
+            margin-left: -10px;
+            width: 350px;
+            height: 180px;
+        }
+        .is-correct .is-correct-option {
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+        input.form-option {
+            margin-left: 10px;
+            width: 180px;
+        }
+        .submit-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            margin-top: 10px;
+
+        }
+        .submit-form .subject-label{ 
+            margin: 5px;
+            font-weight: bold;
+        }
+        .submit-form .subject-choices{
+            margin: 5px; 
+        }
+        .submit-form .submit-btn{
+            margin: 5px;    
+        }
+        .error-message {
+            color:red;
+        }
+        
+  
+    </style>
+</head>
+<body>
+
+    <nav> 
+        <ul class="menu">
+            <img src="static\logo.png" alt="Example Image" class="logo">
+            <li class="delete-question"><a href = "{{url_for('delete_question')}}">Delete Questions</a></li>
+            <li class="update-question"><a href = "{{url_for('update_question')}}">Update Questions</a></li>
+            <li class="update-option"><a href = "{{url_for('update_option')}}">Update Options</a></li>
+            <li class="logout"><a href = "{{url_for('logout')}}">Logout</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="main-section">
+        <h1 style="margin-top: 5%; margin-bottom: 6%;">Add Questions to the Database</h1>
+        <div class="form-section">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label>{{form.question.label}}</label>  {{form.question(class="form-control-2")}}
+            </div>
+            <div class="option-form">
+                <div class="options">
+                     <div class="option">
+                        <label>{{form.opn_a.label}}</label> {{form.opn_a(class="form-option")}}
+                     </div>
+                     <div class="option">
+                        <label>{{form.opn_b.label}}</label> {{form.opn_b(class="form-option")}}
+                     </div>
+                     <div class="option">
+                        <label>{{form.opn_c.label}}</label> {{form.opn_c(class="form-option")}}
+                     </div>
+                     <div class="option">
+                        <label>{{form.opn_d.label}}</label> {{form.opn_d(class="form-option")}}
+                     </div>
+                </div>
+                <div class="is-correct">
+                    <div class="is-correct-option">
+                        {{form.correct_a.label}}
+                        {%for choice in form.correct_a.choices %}
+                             <input type="radio"  name="correct_a" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </div>
+                    <div class="is-correct-option">
+                        {{form.correct_b.label}}
+                        {%for choice in form.correct_b.choices %}
+                             <input type="radio"  name="correct_b" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </div>
+                    <div class="is-correct-option">
+                        {{form.correct_c.label}}
+                        {%for choice in form.correct_c.choices %}
+                             <input type="radio"  name="correct_c" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </div>
+                    <div class="is-correct-option">
+                        {{form.correct_d.label}}
+                        {%for choice in form.correct_d.choices %}
+                             <input type="radio"  name="correct_d" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+            <div class="submit-form">
+                {% with messages = get_flashed_messages() %}
+               {% if messages %}
+                <p class="error-message">{{ messages[0] }}</p>    
+                {% endif %}
+               {% endwith %}
+                <div class="subject-label">
+                    {{form.course.label}}
+                </div>
+                <div class="subject-choices">
+                    {%for choice in form.course.choices %}
+                         <input type="radio"  name="course" value="{{choice[0]}}">
+                         <label>{{choice[1]}}</label>
+                    {%endfor%}
+                </div>
+                <div class="submit-btn">
+                   {{form.submit}}
+         
+                </div>
+             </div>
+            
+        </form>
+        
+    </div>
+    </div> 
+
+     
+    
+</body>
+</html>

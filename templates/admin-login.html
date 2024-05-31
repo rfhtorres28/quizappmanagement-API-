@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+       body, html{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .main-section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  
+            width: 400px;
+            height: 400px;
+        }
+
+        .main-section img {  
+            top: 20px;
+            position: absolute;
+            width: 200px;
+            height: 100px;       
+        }     
+       .form-group {
+        margin: 15px;
+       }
+
+       .form-section {
+        position: absolute;
+        margin-top: 70px;
+       }
+       .login-btn {
+        position: absolute;
+        margin-top: 20px;
+        margin-left: 230px;
+       }
+    </style>
+</head>
+<body>
+    <div class="main-section">
+            <img src="static\logo.png" >
+            <div class="form-section">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="login-form">
+                    <legend>Administrator Login</legend>
+                        <div class="form-group">
+                            {{form.email.label}}  {{form.email}}
+                            <div class="errors">
+                                {%if form.email.errors %}
+                                    {%for error in form.email.errors%}
+                                        {{error}}
+                                    {%endfor%}
+                                {%endif%}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{form.password.label}}  {{form.password}}
+                            <div class="errors">
+                                {%if form.password.errors %}
+                                    {%for error in form.password.errors%}
+                                        {{error}}
+                                    {%endfor%}
+                                {%endif%}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{form.remember.label}}  {{form.remember}}         
+                        </div>
+                </fieldset>
+                        {{form.submit(class="login-btn")}}
+                </form> 
+            </div>  
+           
+    </div>
+</body>
+</html>

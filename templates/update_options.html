@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Options</title>
+</head>
+<style>
+     nav{
+             background-color: #333; /* Background color of the navigation bar */
+            color: #fff; /* Text color of the navigation links */
+            padding: 10px; /* Padding around the navigation links */
+            height: 60px; 
+           }
+
+        ul {
+            list-style-type: none; /* Remove bullet points from the list */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+           }
+           
+        li {
+            display: inline; /* Display list items horizontally */
+            margin-right: 20px; /* Add spacing between navigation links */
+           }
+       
+        body, html {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                background-color: #ffffff;
+                padding-bottom: 25px;
+                margin-bottom: 35px;
+                height: 100vh;
+             }
+        .menu li{
+            display: inline-block;
+            margin-left: 250px;
+            margin-top: 20px;
+
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        li.header {
+            font-family: sans-serif;
+            font-size: 20px;
+            position: relative;
+            top: -3px;
+            margin-left: 45%;
+
+        }
+        li.add-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 54%;
+
+        }
+        li.add-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.logout {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 1%;
+        }
+        li.logout a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.update-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 1%;   
+        }
+        li.update-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        li.delete-question {
+            font-family: sans-serif;
+            font-size: 17px;
+            top: -3px;
+            margin-left: 1%;
+
+       
+        }
+        li.delete-question a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+        .logo {
+            position: absolute;
+            height: auto;
+            left: 0;
+            width: 170px;
+            margin-top: -17px;
+        }
+        .main-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 4%;
+            margin-left: 3%;
+            width: 1200px;
+            height: 400px;
+        }
+    
+        .select-course {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -55%;
+            height: 170px;
+            width: 440px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            border-radius: 5%;       
+        }
+ 
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            background-color: #f1f1f1; 
+        }
+        td {
+            background-color: #ffffff;
+        }
+        tr {
+            text-align: center;
+        }
+        table td:nth-child(1){ 
+          color: #333;
+           font-weight: normal;
+           width: 130px;
+           text-align: center;
+        } 
+        table td:nth-child(2){ 
+          color: #333;
+           font-weight: normal;
+           width: 100px;
+           text-align: center;
+        } 
+        table td:nth-child(3) {
+          color: #333;
+           font-weight: normal;
+           width: 360px;
+           text-align: center;
+        } 
+        table th:nth-child(1) { 
+          color: #333;
+           font-weight: bold;
+           width: 130px;
+           text-align: center;
+        } 
+        table th:nth-child(2) { 
+          color: #333;
+           font-weight: bold;
+           width: 100px;
+           text-align: center;
+        } 
+        table th:nth-child(3) {
+          color: #333;
+           font-weight: bold;
+           width: 360px;
+           text-align: center;
+        }
+        
+        button {
+             width: 120px;
+             margin-bottom: 1%;  
+        }
+        button a{
+            color: black;
+        }
+        .table {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* position: relative; */
+            overflow: hidden;
+            width: 65%; /* Adjust the width as needed */
+            margin-left: 8%;
+        }
+        .table-scroll {
+        overflow-y: auto; 
+        height: 100%;
+        margin: 0;
+        }
+        .table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f1f1f1;
+}
+.update {
+    font-family: sans-serif;
+    font-size: 17px;
+    margin-right: -30%;
+
+}
+li.update a:hover {
+            
+            color: rgb(72, 72, 253);
+        }
+.question-management {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 430px;
+    height: 630px;
+    margin-left: 5%;
+    margin-top: -13%;
+}
+.update-question-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    width: 530px;
+    height: 330px;
+    border-radius: 5%;
+    margin-top: 85%;
+
+}
+.option-content {
+    width: 100px;
+}
+.question-id {
+    width: 50px;
+}
+.message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -5%;
+    width:auto;
+    height: 50px;
+}
+.form-group {
+    margin-top: 8%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+    width: 530px;
+    height: 230px;
+}
+.is-correct {
+    margin-left: -8%;
+    margin-top: -2%;
+    width: 430px;
+    height: 160px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+
+}
+.option {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 420px;
+    margin-top: -10%;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+}
+.button-spacing {
+        margin-right: 10px; /* Adjust this value as needed */
+    }
+</style>
+<body>
+    <nav> 
+        <ul class="menu">
+            <img src="static\logo.png" alt="Example Image" class="logo">
+            <li class="add-question"><a href = "{{url_for('add_question')}}">Add Questions</a></li>
+            <li class="update-question"><a href = "{{url_for('update_question')}}">Update Questions</a></li>
+            <li class="delete-question"><a href = "{{url_for('delete_question')}}">Delete Questions</a></li>
+            <li class="logout"><a href = "{{url_for('logout')}}">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="main-section">
+            <div class="question-management">
+            <div class="select-course">
+                <h3 style="text-align: center; font-size: 22px;">Select Course</h3>
+                <form id="courseForm" action="" method="POST">
+
+        <span> 
+         <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Electronics'; document.getElementById('courseForm').submit();">Electronics</a></button>
+         <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Communications'; document.getElementById('courseForm').submit();">Communications</a></button>
+        </span> <br><br>
+        <span> 
+            <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'Math'; document.getElementById('courseForm').submit();">Math</a></button>
+            <button class="button-spacing"><a onclick="document.getElementById('courseInput').value = 'GEAS'; document.getElementById('courseForm').submit();">GEAS</a></button>
+        </span>
+              <input type="hidden" id="courseInput" name="course">  
+             </form>   
+           </div>
+           
+           <div class="update-question-group">
+            <h3 style="text-align: center; font-size: 22px; margin-bottom: -3%;">Update Option Values</h3>
+            <form method="POST" action="" >
+                <div class="form-group">
+                 {{form.hidden_tag()}}
+                 <div class="option">
+                <span style="display: flex; align-items: center; width: 200px;"><label style="margin-right: 5%;">{{form.question_id.label}}</label>{{form.question_id(class='question-id')}}</span><br>
+                <span style="display: flex; align-items: center; width: 200px;"><label style="margin-right: 10%;">{{form.opn_a.label}}</label>{{form.opn_a(class='option-content')}}</span><br>
+                <span style="display: flex; align-items: center; width: 200px;"><label style="margin-right: 10%;">{{form.opn_b.label}}</label>{{form.opn_b(class='option-content')}}</span><br>
+                <span style="display: flex; align-items: center; width: 200px;"><label style="margin-right: 10%;">{{form.opn_c.label}}</label>{{form.opn_c(class='option-content')}}</span><br>
+                <span style="display: flex; align-items: center; width: 200px;"><label style="margin-right: 10%;">{{form.opn_d.label}}</label>{{form.opn_d(class='option-content')}}</span><br>
+               </div>
+                <div class="is-correct">
+                    <span>
+                        {{form.correct_a.label}}
+                        {%for choice in form.correct_a.choices %}
+                             <input type="radio"  name="correct_a" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </span><br><br>
+                    <span>
+                        {{form.correct_b.label}}
+                        {%for choice in form.correct_b.choices %}
+                             <input type="radio"  name="correct_b" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </span><br><br>
+                    <span>
+                        {{form.correct_c.label}}
+                        {%for choice in form.correct_c.choices %}
+                             <input type="radio"  name="correct_c" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                        <span><br><br>
+                            <span>
+                        {{form.correct_d.label}}
+                        {%for choice in form.correct_d.choices %}
+                             <input type="radio"  name="correct_d" value="{{choice[0]}}">
+                             <label>{{choice[1]}}</label>
+                        {%endfor%}
+                    </span><br><br>
+                </div>
+              </div>
+              <div class="message" style="margin-top: -10%;">
+                {%if message%}
+                 <span style="color:red;">{{message[0]}}</span>
+                {%endif%}
+                </div>
+              <span style="text-align: center;">{{form.submit}}</span>
+           </form>
+          </div>    
+        </div>
+    <div class="table">
+        <div class="table-scroll">
+       <table>
+        <thead>   
+           <tr>
+             <th>Subject</th>
+             <th>Question ID</th>
+             <th>Question</th>
+             <th>Choices</th>
+             <th>Letter</th>
+             <th>Is the choice correct?</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for question in question_list %}
+            {% for option in question["options"] %}
+            <tr>
+                <td>{{ course }}</td>
+                <td>{{ question["id"] }}</td>
+                <td>{{ question["content"] }}</td>
+                <td>{{ option["letter"] }}</td>
+                <td>{{ option["content"] }}</td>
+                <td>{{ "Correct" if option["is_correct"] else "Incorrect" }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+     </table>
+    </div>
+    </div>
+   
+</div>
+    
+</body>
+</html>
