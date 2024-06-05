@@ -27,6 +27,9 @@ host = 'localhost'
 database_name= 'eeadmin'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{host}:{port}/{database_name}?charset=utf8mb4' # Modify MySQL database configuration to include the charset=utf8mb4 parameter to support unicode text
 
+# API KEY 
+API_KEY = 'd92847608f9ffd35'
+
 
 # Creating class for User Admin using db.Model and UserMixin Resource
 class UserAdmin(UserMixin, db.Model): 
@@ -96,8 +99,11 @@ class AddQuestions(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
+    api_key = PasswordField('API_key', validators=[DataRequired()])
     remember = BooleanField('Remember me')
     submit = SubmitField('Login')
+    
+
 
 
 
@@ -157,15 +163,30 @@ def register():
 def login():
 
     form = LoginForm()
+    message = get_flashed_messages()
+
     if request.method == 'POST': 
         if form.validate_on_submit():
             user = UserAdmin.query.filter_by(email=form.email.data).first()
-            if user and bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('add_question'))
+            if user:
+                if bcrypt.check_password_hash(user.password, form.password.data):
+                  response = requests.get('http://47.128.80.63:8080/api-key')
+                  if form.api_key.data == response.json().get('api_key'):
+                     login_user(user)
+                     flash('Established connection')
+                     return redirect(url_for('add_question'))
+                
+                  else:
+                      flash('API Key is invalid')
+                      return redirect(url_for('login'))
+                  
+                else:
+                    flash('Password is incorrect')
+                    return redirect(url_for('login')) 
+
             
 
-    return render_template('admin-login.html', form=form)
+    return render_template('admin-login.html', form=form, message=message)
 
 
 @app.route('/admin-logout')
@@ -181,6 +202,7 @@ def add_question():
 
     form = AddQuestions()
     messages = get_flashed_messages()
+  
     
 
     if request.method == 'POST':
@@ -193,28 +215,29 @@ def add_question():
         
         if form.validate_on_submit():  
              if form.course.data == 'elecs':
-               url = 'http://127.0.0.1:5000/elecsqn-api'
+               url = 'http://47.128.80.63:8080/elecsqn-api'
                response = requests.post(url, json=question) 
 
                if response.status_code == 200:
                      print('Question added succesfully')
 
+
              elif form.course.data == 'comms':
-               url = 'http://127.0.0.1:5000/commsqn-api'
+               url = 'http://47.128.80.63:8080//commsqn-api'
                response = requests.post(url, json=question)   
 
                if response.status_code == 200:
                      print('Question added succesfully')  
 
              elif form.course.data == 'math':
-               url = 'http://127.0.0.1:5000/mathqn-api'
+               url = 'http://47.128.80.63:8080//mathqn-api'
                response = requests.post(url, json=question)   
 
                if response.status_code == 200:
                      print('Question added succesfully')   
              
              elif form.course.data == 'geas':
-               url = 'http://127.0.0.1:5000/geasqn-api'
+               url = 'http://47.128.80.63:8080//geasqn-api'
                response = requests.post(url, json=question)   
 
                if response.status_code == 200:
@@ -253,10 +276,11 @@ def add_question():
 @login_required
 def delete_question():
    
-   
+
    question_list = [] 
    course = ''
    if request.method == 'POST':
+   
        
        session_id = secrets.token_hex(16)
        session['sid'] = session_id
@@ -264,7 +288,7 @@ def delete_question():
        question_id = request.form.get('question_id', '') #question id for deletion
 
        if course == 'Electronics':
-           url = 'http://127.0.0.1:5000/elecsqn-api' 
+           url = 'http://47.128.80.63:8080//elecsqn-api' 
            session['subject'] = 'electronics'
            session['url'] = url
            response = requests.get(url)
@@ -273,11 +297,13 @@ def delete_question():
                json_data = response.json()
                print(json_data)
                question_list = json_data.get("elecs_questions")
+           
            else:
-               print('Retrieval of questions is unsuccesful:', response.status_code)
+               print('Error:', response.status_code)
+
 
        elif course == 'Communications':
-           url = 'http://127.0.0.1:5000/commsqn-api' 
+           url = 'http://47.128.80.63:8080//commsqn-api' 
            session['subject'] = 'communications'
            session['url'] = url
            response = requests.get(url)
@@ -286,11 +312,12 @@ def delete_question():
                json_data = response.json()
                print(json_data)
                question_list = json_data.get("comms_questions")
+           
            else:
                print('Error:', response.status_code)
 
        elif course == 'Math':
-           url = 'http://127.0.0.1:5000/mathqn-api' 
+           url = 'http://47.128.80.63:8080//mathqn-api' 
            session['subject'] = 'math'
            session['url'] = url
            response = requests.get(url)
@@ -299,11 +326,12 @@ def delete_question():
                json_data = response.json()
                print(json_data)
                question_list = json_data.get("math_questions")
+           
            else:
                print('Error:', response.status_code)
        
        elif course == 'GEAS':
-           url = 'http://127.0.0.1:5000/geasqn-api' 
+           url = 'http://47.128.80.63:8080//geasqn-api' 
            session['subject'] = 'geas'
            session['url'] = url
            response = requests.get(url)
@@ -312,6 +340,7 @@ def delete_question():
                json_data = response.json()
                print(json_data)
                question_list = json_data.get("geas_questions")
+           
            else:
                print('Error:', response.status_code)
        
@@ -322,7 +351,8 @@ def delete_question():
            url = session.get('url')
            if question_id: 
                requests.delete(url, data={'question_id':question_id})
-           
+
+              
   
        elif subject == 'communications':
            url = session.get('url')
@@ -367,7 +397,7 @@ def update_question():
        course = request.form.get('course')
      
        if course == 'Electronics':
-           url = 'http://127.0.0.1:5000/elecsqn-api' 
+           url = 'http://47.128.80.63:8080//elecsqn-api' 
            session['subject'] = 'electronics'
            session['url'] = url
            response = requests.get(url)
@@ -380,12 +410,14 @@ def update_question():
                session['question_id'] = question_id
                print(question_id)
                print(session['subject'])
+               
+           
            else:
-               print('Retrieval of questions is unsuccesful:', response.status_code)
+               print('Error:', response.status_code)
 
 
        elif course == 'Communications':
-           url = 'http://127.0.0.1:5000/commsqn-api' 
+           url = 'http://47.128.80.63:8080//commsqn-api' 
            session['subject'] = 'communications'
            session['url'] = url
            response = requests.get(url)
@@ -397,12 +429,14 @@ def update_question():
                session['question_id'] = question_id
                print(question_id)
                print(session['subject'])
+
+           
            else:
-               print('Retrieval of questions is unsuccesful:', response.status_code)
+               print('Error:', response.status_code)
        
 
        elif course == 'Math':
-           url = 'http://127.0.0.1:5000/mathqn-api' 
+           url = 'http://47.128.80.63:8080//mathqn-api' 
            session['subject'] = 'math'
            session['url'] = url
            response = requests.get(url)
@@ -414,12 +448,13 @@ def update_question():
                session['question_id'] = question_id
                print(question_id)
                print(session['subject'])
+           
            else:
-               print('Retrieval of questions is unsuccesful:', response.status_code)
+               print('Error:', response.status_code)
 
 
        elif course == 'GEAS':
-           url = 'http://127.0.0.1:5000/geasqn-api' 
+           url = 'http://47.128.80.63:8080//geasqn-api' 
            session['subject'] = 'geas'
            session['url'] = url
            response = requests.get(url)
@@ -431,8 +466,9 @@ def update_question():
                session['question_id'] = question_id
                print(question_id)
                print(session['subject'])
+
            else:
-               print('Retrieval of questions is unsuccesful:', response.status_code)
+               print('Error:', response.status_code)
 
 
        subject = session.get('subject')
@@ -486,7 +522,7 @@ def update_option():
         course = request.form.get('course')
  
         if course == 'Electronics':
-            url = 'http://127.0.0.1:5000/elecsopn-api' 
+            url = 'http://47.128.80.63:8080//elecsopn-api' 
             session['subject'] = 'electronics'
             session['url'] = url
             response = requests.get(url)
@@ -496,13 +532,13 @@ def update_option():
                 question_list=elecs_questions
                 question_id = [q_id['id'] for q_id in question_list]
                 session['question_id'] = question_id
-    
-     
-            else:
-                print('Retrieval of questions is unsuccesful:', response.status_code)
 
+           
+            else:
+                print('Error:', response.status_code)
+ 
         elif course == 'Communications':
-            url = 'http://127.0.0.1:5000/commsopn-api' 
+            url = 'http://47.128.80.63:8080//commsopn-api' 
             session['subject'] = 'communications'
             session['url'] = url
             response = requests.get(url)
@@ -513,12 +549,13 @@ def update_option():
                 question_id = [q_id['id'] for q_id in question_list]
                 session['question_id'] = question_id
 
+           
             else:
-                print('Error:', response.status_code)
+               print('Error:', response.status_code)
 
 
         elif course == 'Math':
-            url = 'http://127.0.0.1:5000/mathopn-api' 
+            url = 'http://47.128.80.63:8080//mathopn-api' 
             session['subject'] = 'math'
             session['url'] = url
             response = requests.get(url)
@@ -529,12 +566,13 @@ def update_option():
                 question_id = [q_id['id'] for q_id in question_list]
                 session['question_id'] = question_id
 
+           
             else:
-                print('Error:', response.status_code)
+               print('Error:', response.status_code)
 
          
         elif course == 'GEAS':
-            url = 'http://127.0.0.1:5000/geasopn-api' 
+            url = 'http://47.128.80.63:8080//geasopn-api' 
             session['subject'] = 'geas'
             session['url'] = url
             response = requests.get(url)
@@ -544,9 +582,9 @@ def update_option():
                 question_list=geas_questions
                 question_id = [q_id['id'] for q_id in question_list]
                 session['question_id'] = question_id
-                
+
             else:
-                print('Error:', response.status_code)
+               print('Error:', response.status_code)
         
         
 
